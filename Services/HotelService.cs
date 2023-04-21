@@ -20,7 +20,7 @@ namespace Services
             conn.Open();
         }
 
-        public Hotel InsertHotel(Hotel hotel, string INSERT)
+        public Hotel Insert(Hotel hotel, string INSERT)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace Services
             return hotel;
         }
 
-        public bool UpdateHotel(Hotel hotel, string UPDATE)
+        public bool Update(Hotel hotel, string UPDATE)
         {
             bool status = false;
 
@@ -70,7 +70,7 @@ namespace Services
             return status;
         }
 
-        public bool DeleteHotel(int id, string DELETE)
+        public bool Delete(int id, string DELETE)
         {
             bool status = false;
 

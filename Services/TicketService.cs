@@ -20,7 +20,7 @@ namespace Services
             conn.Open();
         }
 
-        public Ticket InsertTicket(Ticket ticket, string INSERT)
+        public Ticket Insert(Ticket ticket, string INSERT)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace Services
             return ticket;
         }
 
-        public bool UpdateTicket(Ticket ticket, string UPDATE)
+        public bool Update(Ticket ticket, string UPDATE)
         {
             bool status = false;
 
@@ -70,7 +70,7 @@ namespace Services
             return status;
         }
 
-        public bool DeleteTicket(int id, string DELETE)
+        public bool Delete(int id, string DELETE)
         {
             bool status = false;
 

@@ -49,7 +49,7 @@ namespace Controllers
                 //_addressService.InsertAddress(hotel.Address);
                 new AddressController().Insert(hotel.Address);
 
-                _hotelService.InsertHotel(hotel, INSERT);
+                _hotelService.Insert(hotel, INSERT);
 
                 status = true;
             }
@@ -66,12 +66,12 @@ namespace Controllers
         {
             new CityController().Update(hotel.Address.City);
             new AddressController().Update(hotel.Address);
-            return _hotelService.UpdateHotel(hotel, UPDATE);
+            return _hotelService.Update(hotel, UPDATE);
         }
 
         public bool Delete(int id)
         {
-            return _hotelService.DeleteHotel(id, DELETE);
+            return _hotelService.Delete(id, DELETE);
         }
 
         public List<Hotel> FindAll()

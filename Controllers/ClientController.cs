@@ -44,7 +44,7 @@ namespace Controllers
                 //client.Address = _addressService.InsertAddress(client.Address);
                 new AddressController().Insert(client.Address);
 
-                _clientService.InsertClient(client, INSERT);
+                _clientService.Insert(client, INSERT);
 
                 status = true;
             }
@@ -60,12 +60,12 @@ namespace Controllers
         {
             new CityController().Update(client.Address.City);
             new AddressController().Update(client.Address);
-            return _clientService.UpdateClient(client, UPDATE);
+            return _clientService.Update(client, UPDATE);
         }
 
         public bool Delete(int id)
         {
-            return _clientService.DeleteClient(id, DELETE);
+            return _clientService.Delete(id, DELETE);
         }
 
         public List<Client> FindAll()

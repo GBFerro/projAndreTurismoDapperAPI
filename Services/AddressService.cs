@@ -15,7 +15,7 @@ namespace Services
             conn.Open();
         }
 
-        public Address InsertAddress(Address address, string INSERT)
+        public Address Insert(Address address, string INSERT)
         {
             int id = 0;
             try
@@ -46,7 +46,7 @@ namespace Services
         }
 
 
-        public bool UpdateAddress(Address address, string UPDATE)
+        public bool Update(Address address, string UPDATE)
         {
             bool status = false;
 
@@ -73,7 +73,7 @@ namespace Services
             return status;
         }
 
-        public bool DeleteAddress(int id, string DELETE)
+        public bool Delete(int id, string DELETE)
         {
             bool status = false;
 

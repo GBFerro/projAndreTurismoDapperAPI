@@ -9,7 +9,7 @@ internal class Program
 
         Console.WriteLine("Teste inclusão de dados");
 
-        //*
+        /*
         Package package = new Package()
         {
             Hotel = new Hotel()
@@ -90,7 +90,7 @@ internal class Program
         };
 
         Console.WriteLine(new PackageController().Insert(package) ? "Inserido" : "Erro");
-        //*/
+        */
 
         /*
         Package package2 = new Package()

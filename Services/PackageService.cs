@@ -21,7 +21,7 @@ namespace Services
             conn.Open();
         }
 
-        public Package InsertPackage(Package package, string INSERT)
+        public Package Insert(Package package, string INSERT)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace Services
             return package;
         }
 
-        public bool UpdatePackage(Package package, string UPDATE)
+        public bool Update(Package package, string UPDATE)
         {
             bool status = false;
 
@@ -71,7 +71,7 @@ namespace Services
             return status;
         }
 
-        public bool DeletePackage(int id, string DELETE)
+        public bool Delete(int id, string DELETE)
         {
             bool status = false;
 

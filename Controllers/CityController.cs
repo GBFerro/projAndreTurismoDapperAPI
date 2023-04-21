@@ -31,7 +31,7 @@ namespace Controllers
             bool status = false;
             try
             {
-                _cityService.InsertCity(city, INSERT);
+                _cityService.Insert(city, INSERT);
                 status = true;
             }
             catch (Exception)
@@ -45,12 +45,12 @@ namespace Controllers
 
         public bool Update(City city)
         {
-            return _cityService.UpdateCity(city, UPDATE);
+            return _cityService.Update(city, UPDATE);
         }
 
         public bool Delete(int id)
         {
-            return _cityService.DeleteCity(id, DELETE);
+            return _cityService.Delete(id, DELETE);
         }
 
         public List<City> FindAll()

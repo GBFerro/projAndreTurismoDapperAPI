@@ -57,7 +57,7 @@ namespace Controllers
                 new AddressController().Insert(ticket.Departure);
                 new AddressController().Insert(ticket.Arrival);
 
-                _ticketService.InsertTicket(ticket, INSERT);
+                _ticketService.Insert(ticket, INSERT);
 
                 status = true;
             }
@@ -78,12 +78,12 @@ namespace Controllers
             new CityController().Update(ticket.Arrival.City);
             new AddressController().Update(ticket.Arrival);
 
-            return _ticketService.UpdateTicket(ticket, UPDATE);
+            return _ticketService.Update(ticket, UPDATE);
         }
 
         public bool Delete(int id)
         {
-            return _ticketService.DeleteTicket(id, DELETE);
+            return _ticketService.Delete(id, DELETE);
         }
 
         public List<Ticket> FindAll()

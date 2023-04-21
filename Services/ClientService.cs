@@ -20,7 +20,7 @@ namespace Services
             conn.Open();
         }
 
-        public Client InsertClient(Client client, string INSERT)
+        public Client Insert(Client client, string INSERT)
         {
             int id = 0;
             try
@@ -47,7 +47,7 @@ namespace Services
             return client;
         }
 
-        public bool UpdateClient(Client client, string UPDATE)
+        public bool Update(Client client, string UPDATE)
         {
             bool status = false;
 
@@ -71,7 +71,7 @@ namespace Services
             return status;
         }
 
-        public bool DeleteClient(int id, string DELETE)
+        public bool Delete(int id, string DELETE)
         {
             bool status = false;
 

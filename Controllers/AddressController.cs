@@ -40,7 +40,7 @@ namespace Controllers
                 new CityController().Insert(address.City);
                 //address.City = _cityService.InsertCity(address.City);
 
-                _addressService.InsertAddress(address, INSERT);
+                _addressService.Insert(address, INSERT);
 
                 status = true;
             }
@@ -55,12 +55,12 @@ namespace Controllers
         public bool Update(Address address)
         {
             new CityController().Update(address.City);
-            return _addressService.UpdateAddress(address, UPDATE);
+            return _addressService.Update(address, UPDATE);
         }
 
         public bool Delete(int id)
         {
-            return _addressService.DeleteAddress(id, DELETE);
+            return _addressService.Delete(id, DELETE);
         }
 
         public List<Address> FindAll()

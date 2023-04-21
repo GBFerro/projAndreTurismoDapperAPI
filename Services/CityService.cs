@@ -19,7 +19,7 @@ namespace Services
             conn.Open();
         }
 
-        public City InsertCity(City city, string INSERT)
+        public City Insert(City city, string INSERT)
         {
             int id = 0;
 
@@ -45,7 +45,7 @@ namespace Services
             return city;
         }
 
-        public bool UpdateCity(City city, string UPDATE)
+        public bool Update(City city, string UPDATE)
         {
             bool status = false;
 
@@ -68,7 +68,7 @@ namespace Services
             return status;
         }
 
-        public bool DeleteCity(int id, string INSERT)
+        public bool Delete(int id, string INSERT)
         {
             bool status = false;
             try

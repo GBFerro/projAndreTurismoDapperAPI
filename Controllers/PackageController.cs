@@ -102,7 +102,7 @@ namespace Controllers
                 //_ticketService.InsertTicket(package.Ticket);
                 new TicketController().Insert(package.Ticket);
 
-                _packageService.InsertPackage(package, INSERT);
+                _packageService.Insert(package, INSERT);
 
                 status = true;
             }
@@ -120,12 +120,12 @@ namespace Controllers
             new HotelController().Update(package.Hotel);
             new ClientController().Update(package.Client);
             new TicketController().Update(package.Ticket);
-            return _packageService.UpdatePackage(package, UPDATE);
+            return _packageService.Update(package, UPDATE);
         }
 
         public bool Delete(int id)
         {
-            return _packageService.DeletePackage(id, DELETE);
+            return _packageService.Delete(id, DELETE);
         }
 
         public List<Package> FindAll()
