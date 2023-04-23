@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services;
 
-namespace Controllers
+namespace projAndreTurismoAPI.Controllers
 {
-    public class TicketController
+    [Route("api/[controller]")]
+    [ApiController]
+    public class TicketController : ControllerBase
     {
-        #region Constants
         public readonly static string INSERT = "insert into Ticket (Departure, Arrival, RegisterDate, Value) " +
             "values (@Departure, @Arrival, @RegisterDate, @Value); Select cast(scope_Identity() as int)";
 
@@ -29,7 +31,6 @@ namespace Controllers
         public readonly static string DELETE = "delete from Ticket where Id = @Id";
 
         public readonly static string UPDATE = "update Ticket set Value = @Value where Id = @Id";
-        #endregion
 
         private TicketService _ticketService;
 
@@ -38,6 +39,7 @@ namespace Controllers
             _ticketService = new TicketService();
         }
 
+        [HttpPost(Name = "Insert Ticket")]
         public int Insert(Ticket ticket)
         {
             ticket.Departure.Id = new AddressController().Insert(ticket.Departure);
@@ -45,6 +47,7 @@ namespace Controllers
             return _ticketService.Insert(ticket, INSERT);
         }
 
+        [HttpPut(Name = "Update Ticket")]
         public bool Update(Ticket ticket)
         {
 
@@ -55,11 +58,13 @@ namespace Controllers
             return _ticketService.Update(ticket, UPDATE);
         }
 
+        [HttpDelete(Name = "Delete Ticket By {id}")]
         public bool Delete(int id)
         {
             return _ticketService.Delete(id, DELETE);
         }
 
+        [HttpGet(Name ="List Tickets")]
         public List<Ticket> FindAll()
         {
             return _ticketService.FindAll(GETALL);

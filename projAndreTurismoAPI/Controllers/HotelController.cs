@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services;
 
-namespace Controllers
+namespace projAndreTurismoAPI.Controllers
 {
-    public class HotelController
+    [Route("api/[controller]")]
+    [ApiController]
+    public class HotelController : ControllerBase
     {
-        #region Constants
         public readonly static string INSERT = "insert into Hotel (Name, IdAddress, RegisterDate, Value) " +
             "values (@Name, @IdAddress, @RegisterDate, @Value); Select cast(scope_Identity() as int)";
 
@@ -27,7 +29,7 @@ namespace Controllers
         public readonly static string DELETE = "delete from Hotel where Id = @Id";
 
         public readonly static string UPDATE = "update Hotel set Name = @Name, Value = @Value where Id = @Id";
-        #endregion
+
 
         private HotelService _hotelService;
         public HotelController()
@@ -35,12 +37,14 @@ namespace Controllers
             _hotelService = new HotelService();
         }
 
+        [HttpPost(Name = "Insert Hotel")]
         public int Insert(Hotel hotel)
         {
             hotel.Address.Id = new AddressController().Insert(hotel.Address);
             return _hotelService.Insert(hotel, INSERT);
         }
 
+        [HttpPut(Name = "Update Hotel")]
         public bool Update(Hotel hotel)
         {
             new CityController().Update(hotel.Address.City);
@@ -48,12 +52,14 @@ namespace Controllers
             return _hotelService.Update(hotel, UPDATE);
         }
 
+        [HttpDelete(Name = "Delete Hotel By {id}")]
         public bool Delete(int id)
         {
             new AddressController().Delete(id);
             return _hotelService.Delete(id, DELETE);
         }
 
+        [HttpGet(Name = "List Hotels")]
         public List<Hotel> FindAll()
         {
             return _hotelService.FindAll(GETALL) ;

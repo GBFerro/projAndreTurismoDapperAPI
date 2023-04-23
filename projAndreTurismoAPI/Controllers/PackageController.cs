@@ -1,11 +1,13 @@
-﻿using Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Models;
 using Services;
 
-namespace Controllers
+namespace projAndreTurismoAPI.Controllers
 {
-    public class PackageController
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PackageController : ControllerBase
     {
-        #region Constants
         public readonly static string INSERT = "insert into Package (IdHotel, IdTicket, IdClient, RegisterDate, Value) " +
             "values (@IdHotel, @IdTicket, @IdClient, @RegisterDate, @Value); Select cast(scope_Identity() as int)";
 
@@ -46,7 +48,6 @@ namespace Controllers
         public readonly static string DELETE = "delete from Package where Id = @Id";
 
         public readonly static string UPDATE = "update Package set Value = @Value where Id = @Id";
-        #endregion
 
         private PackageService _packageService;
 
@@ -54,6 +55,8 @@ namespace Controllers
         { 
             _packageService = new PackageService();
         }
+
+        [HttpPost(Name = "Insert Package")]
         public bool Insert(Package package)
         {
             bool status = false;
@@ -79,6 +82,7 @@ namespace Controllers
             return status;
         }
 
+        [HttpPut(Name = "Update Package")]
         public bool Update(Package package)
         {
             new HotelController().Update(package.Hotel);
@@ -87,11 +91,13 @@ namespace Controllers
             return _packageService.Update(package, UPDATE);
         }
 
+        [HttpDelete(Name = "Delete Package By {id}")]
         public bool Delete(int id)
         {
             return _packageService.Delete(id, DELETE);
         }
 
+        [HttpGet(Name = "List Package")]
         public List<Package> FindAll()
         {
             return _packageService.FindAll(GETALL);
