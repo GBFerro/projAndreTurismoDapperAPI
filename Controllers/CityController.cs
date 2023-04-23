@@ -26,17 +26,17 @@ namespace Controllers
             _cityService = new CityService();
         }
 
-        public bool Insert(City city)
+        public int Insert(City city)
         {
-            bool status = false;
+            int status = 0;
             try
             {
-                _cityService.Insert(city, INSERT);
-                status = true;
+                
+                status = _cityService.Insert(city, INSERT); ;
             }
             catch (Exception)
             {
-                status = false;
+                status = 0;
                 throw;
             }
 

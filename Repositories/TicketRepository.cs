@@ -3,31 +3,82 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
 using Models;
 using Repositories.Interfaces;
 
 namespace Repositories
 {
-    internal class TicketRepository : ITicketRepository
+    public class TicketRepository : ConnectionDBRepository, ITicketRepository
     {
-        public bool Delete(int id)
+        public bool Delete(int id, string DELETE)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (Conn)
+                {
+                    Conn.Execute(DELETE, new { Id = id });
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public List<Address> FindAll()
+        public List<Ticket> FindAll(string GETALL)
         {
-            throw new NotImplementedException();
+            List<Ticket> list = new List<Ticket>();
+            using (Conn)
+            {
+                Conn.Open();
+                list = (List<Ticket>)Conn.Query<Ticket, Address, City, Address, City, Ticket>(GETALL, (ticket, departure, cityD, arrival, cityA) => 
+                { ticket.Departure = departure; ticket.Departure.City = cityD; ticket.Arrival = arrival; ticket.Arrival.City = cityA; return ticket; });
+            }
+            return list;
         }
 
-        public bool Insert(Ticket ticket)
+        public int Insert(Ticket ticket, string INSERT)
         {
-            throw new NotImplementedException();
+            try
+            {
+                int id;
+                using (Conn)
+                {
+                    Conn.Open();
+                    id = Conn.ExecuteScalar<int>(INSERT, new
+                    {
+                        @Departure = ticket.Departure.Id,
+                        @Arrival = ticket.Arrival.Id,
+                        @RegisterDate = ticket.RegisterDate,
+                        @Value = ticket.Value
+                    });
+                }
+                return id;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public bool Update(Ticket ticket)
+        public bool Update(Ticket ticket, string UPDATE)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (Conn)
+                {
+                    Conn.Open();
+                    Conn.Execute(UPDATE, ticket);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

@@ -9,12 +9,12 @@ namespace Repositories.Interfaces
 {
     internal interface IAddressRepository
     {
-        bool Insert(Address address);
+        int Insert(Address address, string INSERT);
 
-        bool Update(Address address);
+        bool Update(Address address, string UPDATE);
 
-        bool Delete(int id);
+        bool Delete(int id, string DELETE);
 
-        List<Address> FindAll();
+        List<Address> FindAll(string GETALL);
     }
 }

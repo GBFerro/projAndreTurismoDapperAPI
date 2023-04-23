@@ -9,12 +9,12 @@ namespace Repositories.Interfaces
 {
     internal interface ITicketRepository
     {
-        bool Insert(Ticket ticket);
+        int Insert(Ticket ticket, string INSERT);
 
-        bool Update(Ticket ticket);
+        bool Update(Ticket ticket, string UPDATE);
 
-        bool Delete(int id);
+        bool Delete(int id, string DELETE);
 
-        List<Address> FindAll();
+        List<Ticket> FindAll(string GETALL);
     }
 }

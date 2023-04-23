@@ -13,11 +13,7 @@ namespace Controllers
         public readonly static string INSERT = "insert into Address (Street, Number, District, ZipCode, Complement, RegisterDate, IdCity) " +
             "values (@Street, @Number, @District, @ZipCode, @Complement, @RegisterDate, @IdCity); Select cast(scope_Identity() as int)";
 
-        public readonly static string GETALL = "select a.Id as AddressId, a.Street as AddressStreet, " +
-            "a.Number as AddressNumber, a.District as AddressDistrict, " +
-            "a.ZipCode as AddressZip, " +
-            "a.Complement as AddressComplement, c.Id as CityId, c.Name as CityName, " +
-            "c.RegisterDate as CityRegister, a.RegisterDate as AddressRegister " +
+        public readonly static string GETALL = "select a.Id, a.Street, a.Number, a.District, a.ZipCode, a.Complement, a.RegisterDate, c.Id, c.Name, c.RegisterDate " +
             "from Address a join City c on a.IdCity = c.Id";
 
         public readonly static string DELETE = "delete from Address where Id = @Id";
@@ -26,30 +22,15 @@ namespace Controllers
             "ZipCode = @ZipCode, Complement = @Complement where Id = @Id";
 
         private AddressService _addressService;
-        //private CityService _cityService;
+
         public AddressController() {
             _addressService = new AddressService();
-            //_cityService = new CityService();
         }  
 
-        public bool Insert(Address address)
+        public int Insert(Address address)
         {
-            bool status = false;
-            try
-            {
-                new CityController().Insert(address.City);
-                //address.City = _cityService.InsertCity(address.City);
-
-                _addressService.Insert(address, INSERT);
-
-                status = true;
-            }
-            catch (Exception)
-            {
-                status = false;
-                throw;
-            }
-            return status;
+            address.City.Id = new CityController().Insert(address.City);
+            return new AddressService().Insert(address, INSERT);
         }
 
         public bool Update(Address address)
@@ -60,6 +41,7 @@ namespace Controllers
 
         public bool Delete(int id)
         {
+            new CityController().Delete(id);
             return _addressService.Delete(id, DELETE);
         }
 

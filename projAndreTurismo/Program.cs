@@ -1,5 +1,6 @@
 ﻿using Controllers;
 using Models;
+using Repositories;
 
 internal class Program
 {
@@ -9,7 +10,7 @@ internal class Program
 
         Console.WriteLine("Teste inclusão de dados");
 
-        /*
+
         Package package = new Package()
         {
             Hotel = new Hotel()
@@ -89,8 +90,8 @@ internal class Program
             RegisterDate = DateTime.Now
         };
 
-        Console.WriteLine(new PackageController().Insert(package) ? "Inserido" : "Erro");
-        */
+        //Console.WriteLine(new PackageController().Insert(package) ? "Inserido" : "Erro");
+
 
         /*
         Package package2 = new Package()
@@ -171,6 +172,119 @@ internal class Program
         //Console.WriteLine(new PackageController().Insert(package) ? "Inserido" : "Erro");
         //Console.WriteLine(new PackageController().Update(package2) ? "Alterado" : "Não encontrado");
         //Console.WriteLine(new CityController().Delete(matao) ? "Deletado" : "Não encontrado");
+
+        Address address = new()
+        {
+            //Id = 1,
+            Street = "Rua putin2",
+            Number = 4442,
+            District = "Urso fofo2",
+            ZipCode = "01304001",
+            Complement = "apto 444",
+            RegisterDate = DateTime.Now,
+            City = new City()
+            {
+                //Id = 1,
+                Name = "Vaskóvia2",
+                RegisterDate = DateTime.Now
+            }
+        };
+
+        City city = new City()
+        {
+            Id= 1,
+            Name = "matão",
+            //RegisterDate = DateTime.Now
+        };
+
+        Client pedro = new Client()
+        {
+            Id = 1,
+            Name = "Pedro de Melo Souza",
+            Phone = "11999999999",
+            //RegisterDate = DateTime.Now,
+            Address = new Address()
+            {
+                Id = 1,
+                Street = "Rua Augusta de Damião",
+                Number = 1000,
+                District = "Consolação",
+                ZipCode = "01304001",
+                Complement = "apto 1001",
+                //RegisterDate = DateTime.Now,
+                City = new City()
+                {
+                    Id = 1,
+                    Name = "São Bernardo do Campo",
+                    //RegisterDate = DateTime.Now
+                }
+            }
+        };
+
+        Hotel hotel = new Hotel()
+        {
+            Id = 1,
+            Name = "Hotel Oton",
+            RegisterDate = DateTime.Now,
+            Address = new Address()
+            {
+                Id = 1,
+                Street = "Avenida Baldan",
+                Number = 1702,
+                District = "Baldan",
+                ZipCode = "22021001",
+                Complement = "null",
+                RegisterDate = DateTime.Now,
+                City = new City()
+                {
+                    Id = 1,
+                    Name = "Matão",
+                    RegisterDate = DateTime.Now
+                }
+            },
+            Value = 3000,
+        };
+
+        Ticket ticket= new Ticket()
+        {
+            Id= 1,
+            Departure = new Address()
+            {
+                Id = 1,
+                Street = "Rodovia 2233",
+                Number = 123,
+                District = "Cumbica",
+                ZipCode = "07190100",
+                Complement = "null",
+                City = new City()
+                {
+                    Id = 1,
+                    Name = "São jose rio preto",
+                    RegisterDate = DateTime.Now
+                },
+                RegisterDate = DateTime.Now
+            },
+            Arrival = new Address()
+            {Id = 2,
+                Street = "Avenida 15 de novembro",
+                Number = 321,
+                District = "Galeão",
+                ZipCode = "21941900",
+                Complement = "null",
+                City = new City()
+                {Id = 2,
+                    Name = "Rio grande",
+                    RegisterDate = DateTime.Now
+                },
+                RegisterDate = DateTime.Now
+            },
+            Value = 200,
+            RegisterDate = DateTime.Now
+        };
+
+        //Console.WriteLine(new PackageController().Insert(package));
+        //Console.WriteLine(new TicketController().Update(ticket));
+        Console.WriteLine(new PackageController().Delete(1));
 
         new PackageController().FindAll().ForEach(x => Console.WriteLine(x + "\n\n"));
     }

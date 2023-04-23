@@ -4,38 +4,81 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
 using Models;
 using Repositories.Interfaces;
 
 namespace Repositories
 {
-    internal class AddressRepository : IAddressRepository
+    public class AddressRepository : ConnectionDBRepository, IAddressRepository
     {
-        private string Conn { get; set; }
-
-        public AddressRepository() 
+        public bool Delete(int id, string DELETE)
         {
-            Conn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
+
+            try
+            {
+                using (Conn)
+                {
+                    Conn.Execute(DELETE, new { Id = id });
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
-        public bool Delete(int id)
+        public List<Address> FindAll(string GETALL)
         {
-            throw new NotImplementedException();
+            List<Address> list = new List<Address>();
+            using (Conn)
+            {
+                Conn.Open();
+                list = (List<Address>) Conn.Query<Address, City, Address>(GETALL, (address, city) => { address.City = city; return address; });
+            }
+            return list;
         }
 
-        public List<Address> FindAll()
+        public int Insert(Address address, string INSERT)
         {
-            throw new NotImplementedException();
+            try
+            {
+                int id;
+                using (Conn)
+                {
+                    Conn.Open();
+                    id = Conn.ExecuteScalar<int>(INSERT, new {@Street = address.Street, @Number = address.Number, @District = address.District,
+                                                            @ZipCode = address.ZipCode, @Complement = address.Complement, @RegisterDate = address.RegisterDate,
+                                                            @IdCity = address.City.Id});
+                }
+                return id;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public bool Insert(Address address)
+        public bool Update(Address address, string UPDATE)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool Update(Address address)
-        {
-            throw new NotImplementedException();
+            try
+            {
+                using (Conn)
+                {
+                    Conn.Open();
+                    Conn.Execute(UPDATE, address);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
+    
 }

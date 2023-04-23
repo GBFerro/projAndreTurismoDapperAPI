@@ -9,12 +9,12 @@ namespace Repositories.Interfaces
 {
     internal interface IPackageRepository
     {
-        bool Insert(Package package);
+        int Insert(Package package, string INSERT);
 
-        bool Update(Package package);
+        bool Update(Package package, string UPDATE);
 
-        bool Delete(int id);
+        bool Delete(int id, string DELETE);
 
-        List<Address> FindAll();
+        List<Package> FindAll(string GETALL);
     }
 }

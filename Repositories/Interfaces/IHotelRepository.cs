@@ -9,12 +9,12 @@ namespace Repositories.Interfaces
 {
     internal interface IHotelRepository
     {
-        bool Insert(Hotel hotel);
+        int Insert(Hotel hotel, string INSERT);
 
-        bool Update(Hotel hotel);
+        bool Update(Hotel hotel, string UPDATE);
 
-        bool Delete(int id);
+        bool Delete(int id, string DELETE);
 
-        List<Address> FindAll();
+        List<Hotel> FindAll(string GETALL);
     }
 }

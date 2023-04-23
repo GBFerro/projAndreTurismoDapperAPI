@@ -9,12 +9,12 @@ namespace Repositories.Interfaces
 {
     internal interface IClientRepository
     {
-        bool Insert(Client client);
+        int Insert(Client client, string INSERT);
 
-        bool Update(Client client);
+        bool Update(Client client, string UPDATE);
 
-        bool Delete(int id);
+        bool Delete(int id, string DELETE);
 
-        List<Address> FindAll();
+        List<Client> FindAll(string GETALL);
     }
 }

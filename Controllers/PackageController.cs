@@ -8,44 +8,28 @@ namespace Controllers
         public readonly static string INSERT = "insert into Package (IdHotel, IdTicket, IdClient, RegisterDate, Value) " +
             "values (@IdHotel, @IdTicket, @IdClient, @RegisterDate, @Value); Select cast(scope_Identity() as int)";
 
-        public readonly static string GETALL = "select package.[Id] as IdPackage, " +
-            "package.[Value] as ValuePackage, package.[RegisterDate] as RegisterPackage, " +
-            "hotel.[Id] as IdHotel, hotel.[Name] as NameHotel, hotel.[Value] as ValueHotel, " +
-            "addressHotel.[Id] as IdHotelAddress, addressHotel.[Street] as StreetHotelAddress, " +
-            "addressHotel.[Number] as NumberHotelAddress, addressHotel.[District] as DistrictHotelAddress, " +
-            "addressHotel.[ZipCode] as ZipHotelAddress, addressHotel.[Complement] as ComplementHotelAddress, " +
-            "cityHotel.[Id] as IdHotelCity, cityHotel.[Name] as NameHotelCity, " +
-            "cityHotel.[RegisterDate] as RegisterHotelCity, " +
-            "addressHotel.[RegisterDate] as RegisterHotelAddress, " +
-            "hotel.[RegisterDate] as RegisterHotel, ticket.[Id] as TicketId, " +
-            "addressDeparture.[Id] as IdAddressDeparture, " +
-            "addressDeparture.[Street] as StreetAddressDeparture, " +
-            "addressDeparture.[Number] as NumberAddressDeparture, " +
-            "addressDeparture.[District] as DistrictAddressDeparture, " +
-            "addressDeparture.[ZipCode] as ZipAddressDeparture, " +
-            "addressDeparture.[Complement] as ComplementAddressDeparture, " +
-            "cityDeparture.[Id] as IdCityDeparture, cityDeparture.[Name] as NameCityDeparture, " +
-            "cityDeparture.[RegisterDate] as RegisterCityDeparture, " +
-            "addressDeparture.[RegisterDate] as RegisterAddressDeparture, " +
-            "addressArrival.[Id] as IdAddressArrival, addressArrival.[Street] as StreetAddressArrival, " +
-            "addressArrival.[Number] as NumberAddressArrival, " +
-            "addressArrival.[District] as DistrictAddressArrival, " +
-            "addressArrival.[ZipCode] as ZipAddressArrival, " +
-            "addressArrival.[Complement] as ComplementAddressArrival, " +
-            "cityArrival.[Id] as IdCityArrival, cityArrival.[Name] as NameCityArrival, " +
-            "cityArrival.[RegisterDate] as RegisterCityArrival, " +
-            "addressArrival.[RegisterDate] as RegisterAddressArrival, " +
-            "ticket.[Value] as ValueTicket, ticket.[RegisterDate] as RegisterTicket, " +
-            "client.[Id] as IdClient, client.[Name] as NameClient, client.[Phone] as PhoneClient, " +
-            "[addressClient].[Id] as IdClientAddress, [addressClient].[Street] as StreetClientAddress, " +
-            "[addressClient].[Number] as NumberClientAddress, " +
-            "[addressClient].[District] as DistrictClientAddress, " +
-            "[addressClient].[ZipCode] as ZipClientAddress, " +
-            "[addressClient].[Complement] as ComplementClientAddress, " +
-            "cityClient.[Id] as IdClientCity, cityClient.[Name] as NameClientCity, " +
-            "cityClient.[RegisterDate] as RegisterClientCity, " +
-            "[addressClient].[RegisterDate] as RegisterClientAddress, " +
-            "client.[RegisterDate] as RegisterClient " +
+        public readonly static string GETALL = "select package.[Id], " +
+            "package.[Value], package.[RegisterDate], " +
+            "hotel.[Id], hotel.[Name], hotel.[Value], hotel.[RegisterDate], " +
+            "addressHotel.[Id], addressHotel.[Street], " +
+            "addressHotel.[Number], addressHotel.[District], " +
+            "addressHotel.[ZipCode], addressHotel.[Complement], addressHotel.[RegisterDate], " +
+            "cityHotel.[Id], cityHotel.[Name], cityHotel.[RegisterDate], " +
+            "ticket.[Id], ticket.[Value], ticket.[RegisterDate], " +
+            "addressDeparture.[Id], addressDeparture.[Street], addressDeparture.[Number], " + 
+            "addressDeparture.[District], addressDeparture.[ZipCode], addressDeparture.[Complement], " + 
+            "cityDeparture.[Id], cityDeparture.[Name], cityDeparture.[RegisterDate], " +
+            "addressArrival.[Id], addressArrival.[Street], addressArrival.[Number], " +
+            "addressArrival.[District], addressArrival.[ZipCode], addressArrival.[Complement], " +
+            "cityArrival.[Id], cityArrival.[Name], cityArrival.[RegisterDate], " +
+            "client.[Id], client.[Name], client.[Phone], client.[RegisterDate], " +
+            "[addressClient].[Id], [addressClient].[Street], " +
+            "[addressClient].[Number], " +
+            "[addressClient].[District], " +
+            "[addressClient].[ZipCode], " +
+            "[addressClient].[Complement], " +
+            "[addressClient].[RegisterDate], " +
+            "cityClient.[Id], cityClient.[Name], cityClient.[RegisterDate] " +
             "from [Package] package join [Hotel] hotel on package.[IdHotel] = hotel.[Id] " +
             "join [Address] addressHotel on hotel.[IdAddress] = addressHotel.[Id] " +
             "join [City] cityHotel on cityHotel.[Id] = addressHotel.[IdCity] " +
@@ -62,21 +46,10 @@ namespace Controllers
 
         public readonly static string UPDATE = "update Package set Value = @Value where Id = @Id";
 
-
-        //private TicketService _ticketService;
-        //private AddressService _addressService;
-        //private CityService _cityService;
-        //private ClientService _clientService;
-        //private HotelService _hotelService;
         private PackageService _packageService;
 
         public PackageController()
-        {
-            //_cityService = new CityService();
-            //_ticketService = new TicketService();
-            //_addressService = new AddressService();
-            //_hotelService = new HotelService();
-            //_clientService = new ClientService();
+        { 
             _packageService = new PackageService();
         }
         public bool Insert(Package package)
@@ -85,22 +58,11 @@ namespace Controllers
 
             try
             {
-                //_cityService.InsertCity(package.Hotel.Address.City);
-                //_addressService.InsertAddress(package.Hotel.Address);
-                //_hotelService.InsertHotel(package.Hotel);
-                new HotelController().Insert(package.Hotel);
+                package.Hotel.Id = new HotelController().Insert(package.Hotel);
 
-                //_cityService.InsertCity(package.Client.Address.City);
-                //_addressService.InsertAddress(package.Client.Address);
-                //_clientService.InsertClient(package.Client);
-                new ClientController().Insert(package.Client);
+                package.Client.Id = new ClientController().Insert(package.Client);
 
-                //_cityService.InsertCity(package.Ticket.Departure.City);
-                //_cityService.InsertCity(package.Ticket.Arrival.City);
-                //_addressService.InsertAddress(package.Ticket.Departure);
-                //_addressService.InsertAddress(package.Ticket.Arrival);
-                //_ticketService.InsertTicket(package.Ticket);
-                new TicketController().Insert(package.Ticket);
+                package.Ticket.Id = new TicketController().Insert(package.Ticket);
 
                 _packageService.Insert(package, INSERT);
 

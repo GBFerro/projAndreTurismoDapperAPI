@@ -3,31 +3,81 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
 using Models;
 using Repositories.Interfaces;
 
 namespace Repositories
 {
-    internal class HotelRepository : IHotelRepository
+    public class HotelRepository : ConnectionDBRepository, IHotelRepository
     {
-        public bool Delete(int id)
+        public bool Delete(int id, string DELETE)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (Conn)
+                {
+                    Conn.Execute(DELETE, new { Id = id });
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public List<Address> FindAll()
+        public List<Hotel> FindAll(string GETALL)
         {
-            throw new NotImplementedException();
+            List<Hotel> list = new List<Hotel>();
+            using (Conn)
+            {
+                Conn.Open();
+                list = (List<Hotel>)Conn.Query<Hotel, Address, City, Hotel>(GETALL, (hotel, address, city) => { hotel.Address = address; hotel.Address.City = city; return hotel; });
+            }
+            return list;
         }
 
-        public bool Insert(Hotel hotel)
+        public int Insert(Hotel hotel, string INSERT)
         {
-            throw new NotImplementedException();
+            try
+            {
+                int id;
+                using (Conn)
+                {
+                    Conn.Open();
+                    id = Conn.ExecuteScalar<int>(INSERT, new
+                    {
+                        @Name = hotel.Name,
+                        @Value = hotel.Value,
+                        @RegisterDate = hotel.RegisterDate,
+                        @IdAddress = hotel.Address.Id
+                    });
+                }
+                return id;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public bool Update(Hotel hotel)
+        public bool Update(Hotel hotel, string UPDATE)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (Conn)
+                {
+                    Conn.Open();
+                    Conn.Execute(UPDATE, hotel);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

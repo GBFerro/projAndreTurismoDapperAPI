@@ -9,12 +9,12 @@ namespace Repositories.Interfaces
 {
     internal interface ICityRepository
     {
-        bool Insert(City city);
+        int Insert(City city, string INSERT);
 
-        bool Update(City city);
+        bool Update(City city, string UPDATE);
 
-        bool Delete(int id);
+        bool Delete(int id, string DELETE);
 
-        List<City> FindAll();
+        List<City> FindAll(string GETALL);
     }
 }
