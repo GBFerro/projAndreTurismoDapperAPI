@@ -17,11 +17,11 @@ namespace projAndreTurismoAPI.Controllers
             "values (@Departure, @Arrival, @RegisterDate, @Value); Select cast(scope_Identity() as int)";
 
         public readonly static string GETALL = "Select ticket.[Id],ticket.[Value], ticket.[RegisterDate], " + 
-            "addressDeparture.[Id], addressDeparture.[Street], addressDeparture.[Number], " + 
-            "addressDeparture.[District], addressDeparture.[ZipCode], addressDeparture.[Complement], " + 
+            "addressDeparture.[Id], addressDeparture.[Street], addressDeparture.[Number], " +
+            "addressDeparture.[District], addressDeparture.[ZipCode], addressDeparture.[Complement], addressDeparture.[RegisterDate],  " + 
             "cityDeparture.[Id], cityDeparture.[Name], cityDeparture.[RegisterDate], " +
             "addressArrival.[Id], addressArrival.[Street], addressArrival.[Number], " +
-            "addressArrival.[District], addressArrival.[ZipCode], addressArrival.[Complement], " +
+            "addressArrival.[District], addressArrival.[ZipCode], addressArrival.[Complement], addressDeparture.[RegisterDate], " +
             "cityArrival.[Id], cityArrival.[Name], cityArrival.[RegisterDate] " + 
             "from[Ticket] ticket join[Address] addressArrival on ticket.[Arrival] = addressArrival.[Id] " +
             "join[City] cityArrival on addressArrival.[IdCity] = cityArrival.[Id] " +

@@ -11,9 +11,9 @@ namespace Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Address Address { get; set; }
-        public DateTime RegisterDate { get; set; }
         public decimal Value { get; set; }
+        public DateTime RegisterDate { get; set; }
+        public Address Address { get; set; }
 
         public override string ToString()
         {
