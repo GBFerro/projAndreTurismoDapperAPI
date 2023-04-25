@@ -36,20 +36,62 @@ namespace Repositories
             {
                 Conn.Open();
 
-                list = (List<Package>)Conn.Query<Package, Hotel, Client, Ticket, Package>(GETALL, (package, hotel, client, ticket) =>
+                list = (List<Package>) Conn.Query<Package>(GETALL, new[]
                 {
-                    package.Hotel = hotel;
-                    package.Client = client; package.Ticket = ticket; return package;
-                });
+                    typeof(Package),
+                    typeof(Hotel),
+                    typeof(Address),
+                    typeof(City),
+                    typeof(Ticket),
+                    typeof(Address),
+                    typeof(City),
+                    typeof(Address),
+                    typeof(City),
+                    typeof(Client),
+                    typeof(Address),
+                    typeof(City)
+                },
+                obj =>
+                {
+                    Package package = obj[0] as Package;
+                    Hotel hotel = obj[1] as Hotel;
+                    Address addressHotel = obj[2] as Address;
+                    City cityHotel = obj[3] as City;
+                    Ticket ticket = obj[4] as Ticket;
+                    Address addressDeparture = obj[5] as Address;
+                    City cityDeparture = obj[6] as City;
+                    Address addressArrival = obj[7] as Address;
+                    City cityArrival = obj[8] as City;
+                    Client client = obj[9] as Client;
+                    Address addressClient = obj[10] as Address;
+                    City cityClient = obj[11] as City;
 
-                //list = (List<Package>)Conn.Query<Package, Hotel, Address, City, Client, Address, City, Package>(GETALL, (package, hotel, addressH, cityH, client, addressC, cityC)
-                //    => { package.Hotel = hotel; package.Hotel.Address = addressH; package.Hotel.Address.City = cityH; package.Client = client;
-                //        package.Client.Address = addressC; package.Client.Address.City = cityC; return package;
-                //    });
-                //(GETALL, (package, hotel, addressHotel, cityHotel, client, addressClient, cityClient, ticket, departure, cityD, arrival, cityA) =>
-                //{ package.Hotel = hotel; package.Hotel.Address = addressHotel; package.Hotel.Address.City = cityHotel; package.Client = client;
-                //package.Client.Address = addressClient; package.Client.Address.City = cityClient; ticket.Departure = departure; 
-                //ticket.Departure.City = cityD; ticket.Arrival = arrival; ticket.Arrival.City = cityA; return package; });
+                    //package.Hotel.Address.City = cityHotel;
+                    //package.Hotel.Address = addressHotel;
+                    //package.Hotel = hotel;
+                    //package.Ticket.Departure.City = cityDeparture;
+                    //package.Ticket.Departure = addressDeparture;
+                    //package.Ticket.Arrival.City = cityArrival;
+                    //package.Ticket.Arrival = addressArrival;
+                    //package.Ticket = ticket;
+                    //package.Client.Address.City = cityClient;
+                    //package.Client.Address = addressClient;
+                    //package.Client = client;
+
+                    addressHotel.City = cityHotel;
+                    hotel.Address = addressHotel;
+                    package.Hotel = hotel;
+                    addressDeparture.City = cityDeparture;
+                    ticket.Departure = addressDeparture;
+                    addressArrival.City = cityArrival;
+                    ticket.Arrival = addressArrival;
+                    package.Ticket = ticket;
+                    addressClient.City = cityClient;
+                    client.Address = addressClient;
+                    package.Client = client;
+
+                    return package;
+                });
             }
             return list;
         }
