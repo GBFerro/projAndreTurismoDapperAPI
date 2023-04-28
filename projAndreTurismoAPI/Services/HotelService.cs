@@ -12,15 +12,6 @@ namespace Services
 {
     public class HotelService
     {
-        readonly string strConn = @"Server=(localdb)\MSSQLLocalDB;Integrated Security=true;AttachDbFileName=C:\Users\adm\source\repos\projAndreTurismo\Database\AndreTurismo.mdf";
-        readonly SqlConnection conn;
-
-        public HotelService()
-        {
-            conn = new SqlConnection(strConn);
-            conn.Open();
-        }
-
         public int Insert(Hotel hotel, string INSERT)
         {
             return new HotelRepository().Insert(hotel, INSERT);

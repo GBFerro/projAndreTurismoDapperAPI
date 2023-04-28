@@ -12,15 +12,6 @@ namespace Services
 {
     public class ClientService
     {
-        readonly string strConn = @"Server=(localdb)\MSSQLLocalDB;Integrated Security=true;AttachDbFileName=C:\Users\adm\source\repos\projAndreTurismo\Database\AndreTurismo.mdf";
-        readonly SqlConnection conn;
-
-        public ClientService()
-        {
-            conn = new SqlConnection(strConn);
-            conn.Open();
-        }
-
         public int Insert(Client client, string INSERT)
         {
             return new ClientRepository().Insert(client, INSERT);
